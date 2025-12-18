@@ -309,7 +309,7 @@
                 }
             } else {
                 group.scale.set(1,1,1);
-                group.rotation.y += (handRotY - group.rotation.y) * 0.05;
+                group.rotation.y += (handRotY - group.rotation.y) * 0.15;
             }
         }
 
@@ -317,7 +317,7 @@
             requestAnimationFrame(animate);
             const time = Date.now() * 0.001;
             const speed = 0.06;
-            const handRotY = (handX - 0.5) * 2.5;
+            const handRotY = (handX - 0.5) * 10.0;
 
             // Vandiep
             updateParticleGroup(groupGold, state, speed, handRotY, time, false);
@@ -396,7 +396,7 @@
             
             let frameCnt = 0;
             const hands = new Hands({locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`});
-            hands.setOptions({ maxNumHands: 1, modelComplexity: 1, minDetectionConfidence: 0.3, minTrackingConfidence: 0.3 });
+            hands.setOptions({ maxNumHands: 1, modelComplexity: 1, minDetectionConfidence: 0.4, minTrackingConfidence: 0.3 });
 
             hands.onResults(results => {
                 ctx.clearRect(0,0,100,75); ctx.drawImage(results.image, 0, 0, 100, 75);
@@ -430,7 +430,7 @@
 
             const cameraUtils = new Camera(video, {
                 onFrame: async () => {
-                    frameCnt++; if(frameCnt%3 !== 0) return; 
+                    frameCnt++; if(frameCnt%2 !== 0) return; 
                     await hands.send({image: video});
                 }, width: 320, height: 240
             });
